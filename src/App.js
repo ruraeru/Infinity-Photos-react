@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PictureList from './picture-list';
 import styled from 'styled-components';
-import LoadMore from './load-more';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Title = styled.h1`
   display: flex;
@@ -14,6 +14,13 @@ const Title = styled.h1`
   border-radius: 10px;
   background-color: #ffe066;
 `;
+
+const LoadingText = styled.h2`
+  display: flex;
+  justify-content: center;
+
+  font-family: 'Roboto';
+`
 
 class App extends Component {
   state = {
@@ -30,9 +37,9 @@ class App extends Component {
       .get('https://api.unsplash.com/photos/random', {
         params: {
           // client_id: 'WKdnXNbHSg9MnPSYdq1RbwVWc0fNM_8ELECXhIR5hMo',
-          // client_id: 'z4Qnf_reTqGc5uZNA8iZ9D40qQL-E7kuz4m0Dw6Fx-M',
+          client_id: 'z4Qnf_reTqGc5uZNA8iZ9D40qQL-E7kuz4m0Dw6Fx-M',
           // client_id: 'EeY0xxNv9tR3g56W_Z1-hR73A9BNcJq26l1HH_OVEzg',
-          client_id: 'aSaoYrLQXFca00oeG5F2pSWyc5aPdHH3S5TtVe3I8OI',
+          // client_id: 'aSaoYrLQXFca00oeG5F2pSWyc5aPdHH3S5TtVe3I8OI',
           count: 10
         }
       })
@@ -50,15 +57,28 @@ class App extends Component {
       });
   };
 
+  fetchMoreData = () => {
+    setTimeout(() => {
+      this.setState({
+        items: this.getImages()
+      });
+    }, 2000);
+  };
+
 
   render() {
-    console.log(this.state.images);
     return (
-      <>
+      <div style={{fontFamily: 'Roboto'}}>
         <Title>Infinity Photos</Title>
-        <PictureList images={this.state.images} />
-        <LoadMore loadMore={this.getImages} />
-      </>
+        <InfiniteScroll
+          dataLength={this.state.images}
+          next={this.fetchMoreData}
+          hasMore={true}
+          loader={<LoadingText>로딩 중...</LoadingText>}
+        >
+          <PictureList images={this.state.images} />
+        </InfiniteScroll>
+      </div>
     );
   }
 }
