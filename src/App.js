@@ -50,7 +50,7 @@ class App extends Component {
         });
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
         this.setState({
           isPending: false
         });
