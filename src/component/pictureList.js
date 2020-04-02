@@ -6,7 +6,7 @@ const Content = styled.div`
     margin-top: 1rem;
     line-height: 0;
     
-  @media screen and (åmax-width: 832px) {
+  @media screen and (max-width: 832px) {
     column-count: 1;
     column-gap: 20px;
   }
@@ -21,13 +21,13 @@ const Content = styled.div`
 `;
 
 class PictureList extends Component {
-    render = () => {
-        const renderImage = images => {
-            return images.map((x, i) => <Picture key={i} url={x} />);
-        };
-
-        return <Content>{renderImage(this.props.images)}</Content>
+  render = () => {
+    const renderImage = images => {
+      return images.map((x, i) => <Picture key={i} url={x} />);
     };
+
+    return <Content>{renderImage(this.props.images)}</Content>
+  };
 }
 
 export default PictureList;
